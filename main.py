@@ -38,7 +38,7 @@ def regions(a, d):
         region = a[i]
         badge = d[i]
         if verify(region):
-            print(region.getText())
+            print(f'REGION - {region.getText()}')
             row_fluids = get_row_fluids(region['href'])
             region_id = db.add_region(region.getText(), badge.getText(), region['href'])
             find_row_fluids(row_fluids, ['NULL', region_id, 1])
@@ -64,6 +64,8 @@ def settlements(a, d):
             else:
                 settlementType_id = settlement_types[settlement_type]
             row_fluids = get_row_fluids(settlement['href'])
+            if d[2] == 1:
+                print(settlement.getText())
             settlement_id = db.add_settlement(settlement.getText(), d[0], d[1], settlementType_id, d[2], settlement['href'])
             find_row_fluids(row_fluids, [settlement_id, 'NULL', d[2] + 1])
 
