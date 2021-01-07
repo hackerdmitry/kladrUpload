@@ -18,6 +18,10 @@ class database:
         self.cur = self.con.cursor()
 
         if exists:
+            self.region_id = self.get_last_region_id()
+            self.settlementType_id = self.get_last_id('SettlementType')
+            self.settlement_id = self.get_last_id('Settlement')
+            self.street_id = self.get_last_id('Street')
             return
 
         self.cur.execute("CREATE TABLE Region ("
@@ -81,8 +85,11 @@ class database:
     def save_changes(self):
         self.con.commit()
 
-    def get_last_reg(self):
-        self.cur.execute("SELECT * FROM Region")
+    def get_last_region_id(self):
+        return self.get_last_id('Region')
+
+    def get_last_id(self, table):
+        self.cur.execute(f"SELECT * FROM {table}")
         rows = self.cur.fetchall()
-        last_id = rows[0]['Id']
+        last_id = rows[-1][0]
         return last_id

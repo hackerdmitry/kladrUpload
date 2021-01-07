@@ -6,7 +6,7 @@ import re
 from db import database
 
 
-clear_db = True
+clear_db = False
 
 
 def get_row_fluids(url):
@@ -33,11 +33,12 @@ def regions(a, d):
     global db, clear_db
     if len(a) != len(d):
         raise Exception("Тут кол-во должно совпадать")
-    begin = 0 if clear_db else db.get_last_reg()
+    begin = 0 if clear_db else db.get_last_region_id()
     for i in range(begin, len(a)):
         region = a[i]
         badge = d[i]
         if verify(region):
+            print(region.getText())
             row_fluids = get_row_fluids(region['href'])
             region_id = db.add_region(region.getText(), badge.getText(), region['href'])
             find_row_fluids(row_fluids, ['NULL', region_id, 1])
