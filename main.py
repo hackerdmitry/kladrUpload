@@ -34,8 +34,7 @@ def regions(a, d):
     if len(a) != len(d):
         raise Exception("Тут кол-во должно совпадать")
     begin = 0 if clear_db else db.get_last_reg()
-    # for i in range(begin, len(a)):
-    for i in range(2, 3):
+    for i in range(begin, len(a)):
         region = a[i]
         badge = d[i]
         if verify(region):
